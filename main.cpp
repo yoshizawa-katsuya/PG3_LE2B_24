@@ -1,32 +1,60 @@
 #include <stdio.h>
 #include "math.h"
+#include <random>
+#include <windows.h>
 
-int Recursive(int n) {
-	if (n <= 1) {
-		return 100;
+typedef void (*PFunc)(int, int);
+
+void Dice(int num, int dice) {
+
+	
+
+	if (num == 0) {
+		if (dice % 2 == 0) {
+			printf("サイコロ %d 正解\n", dice);
+		}
+		else {
+			printf("サイコロ %d 不正解\n", dice);
+		}
+	}
+	else if (num == 1) {
+		if (dice % 2 == 0) {
+			printf("サイコロ %d 不正解\n", dice);
+		}
+		else {
+			printf("サイコロ %d 正解\n", dice);
+		}
 	}
 
-	return (Recursive(n - 1) * 2 - 50);
+	return;
+}
+
+void Input(PFunc p) {
+
+	printf("偶数なら0、奇数なら1を入力\n");
+
+	int num;
+
+	scanf_s("%d", &num);
+
+	std::random_device rnd;
+	std::mt19937 mt(rnd());
+	std::uniform_int_distribution<> distribution(1, 6);
+
+	int dice = distribution(mt);
+
+	Sleep(3000);
+
+	p(num, dice);
+
 }
 
 int main() {
 
-	int hour = 9;
-	
-	int normal = 1072 * hour;
+	PFunc p;
+	p = Dice;
 
-	int recorsive = Recursive(hour);
-
-	printf("一般的な賃金体系 %d\n", normal);
-
-	printf("再帰的な賃金体系 %d\n", recorsive);
-
-	if (normal > recorsive) {
-		printf("一般的な賃金体系の方が儲かる");
-	}
-	else if (recorsive > normal) {
-		printf("再帰的な賃金体系の方が儲かる");
-	}
+	Input(p);
 
 	return 0;
 }
