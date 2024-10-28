@@ -1,60 +1,14 @@
 #include <stdio.h>
-#include "math.h"
-#include <random>
-#include <windows.h>
-#include <functional>
-
-void SetTimeout(std::function<void()> func, int delay) {
-
-	Sleep(delay);
-
-	func();
-
-}
+#include <memory>
+#include "Enemy.h"
 
 int main() {
 
-	int num;
-	int dice;
+	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>();
 
-	std::function<void()> Dice = [&]() {
-
-		if (num == 0) {
-			if (dice % 2 == 0) {
-				printf("サイコロ %d 正解\n", dice);
-			}
-			else {
-				printf("サイコロ %d 不正解\n", dice);
-			}
-		}
-		else if (num == 1) {
-			if (dice % 2 == 0) {
-				printf("サイコロ %d 不正解\n", dice);
-			}
-			else {
-				printf("サイコロ %d 正解\n", dice);
-			}
-		}
-
-		return;
-	};
-
-	std::function<void()> Input = [&]() {
-
-		printf("偶数なら0、奇数なら1を入力\n");
-
-		scanf_s("%d", &num);
-
-		std::random_device rnd;
-		std::mt19937 mt(rnd());
-		std::uniform_int_distribution<> distribution(1, 6);
-
-		dice = distribution(mt);
-
-		SetTimeout(Dice, 3000);
-	};
-
-	Input();
+	for (int i = 0; i < 3; i++) {
+		enemy->Update();
+	}
 
 	return 0;
 }
