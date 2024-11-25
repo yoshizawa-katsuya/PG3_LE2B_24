@@ -1,26 +1,37 @@
 #include <stdio.h>
 #include <memory>
-#include "Rectangle.h"
-#include "Circle.h"
+#include <list>
 #include <vector>
 
 int main() {
 
-	std::vector<std::unique_ptr<IShape>> shapes;
-	shapes.resize(2);
+	std::list<const char*> stations{"Tokyo", "Kanda", "Akihabara", "Okachimachi", "Ueno", "Uguisudani", "Nippori", 
+									"Tabata", "Komagome", "Sugamo", "Otsuka", "Ikebukuro", "Mejiro", "Takadanobaba",
+									"Shin-Okubo", "Shinjuku", "Yoyogi", "Harajuku", "Shibuya", "Ebisu", "Meguro",
+									"Gotanda", "Osaki", "Shinagawa", "Tamachi", "Hamamatsucho", "Shimbashi", "Yurakucho"};
 
-	for (uint32_t i = 0; i < 2; i++) {
-		if (i < 1) {
-			shapes[i] = std::make_unique<Circle>();
-		}
-		else {
-			shapes[i] = std::make_unique<Rectangle>();
+	printf("1970年の駅一覧\n");
+
+	for (std::list<const char*>::iterator itr = stations.begin(); itr != stations.end(); ++itr) {
+		printf("%s\n", *itr);
+		if (*itr == "Tabata") {
+			stations.insert(itr, "Nishi-Nippori");
 		}
 	}
+
+	printf("\n2019年の駅一覧\n");
 	
-	for (uint32_t i = 0; i < 2; i++) {
-		shapes[i]->Size();
-		shapes[i]->Draw();
+	for (std::list<const char*>::iterator itr = stations.begin(); itr != stations.end(); ++itr) {
+		printf("%s\n", *itr);
+		if (*itr == "Tamachi") {
+			stations.insert(itr, "Takanawa-Gateway");
+		}
+	}
+
+	printf("\n2022年の駅一覧\n");
+
+	for (std::list<const char*>::iterator itr = stations.begin(); itr != stations.end(); ++itr) {
+		printf("%s\n", *itr);
 	}
 
 	return 0;
